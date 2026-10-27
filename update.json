@@ -1,6 +1,7 @@
 {
-  "versionCode": 18,
-  "versionName": "5.8",
-  "apkUrl": "https://github.com/HBSoftware63/hb-aio/releases/download/v1/app-release.apk",
-  "notes": "First version"
+  "versionCode": 19,
+  "versionName": "5.9",
+  "apkUrl": "https://github.com/HBSoftware63/hb-aio/releases/download/v2/app-release.apk",
+  "minVersionCode": 0,
+  "notes": "Update system: forced update support, installs through Android installer automatically."
 }

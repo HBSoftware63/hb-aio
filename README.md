@@ -1,63 +1,97 @@
-# HB AIO Downloader v21
+# All In One Downloader (HB AIO)
 
-A powerful Android downloader designed to make downloading and sharing content simple and convenient.
+Android app by **HBSoftware** to download videos and MP3 from many sites, save WhatsApp statuses, and set a downloaded MP3 as a ringtone.
 
-## Features
-
-- One-click download workflow
-- Easy-to-use interface
-- Quick sharing and download handling
-- Automatic update checking through `update.json` (if configured)
-- Android APK distribution through GitHub Releases
+[![Latest release](https://img.shields.io/github/v/release/HBSoftware63/hb-aio?label=download)](https://github.com/HBSoftware63/hb-aio/releases/latest)
 
 ## Download
 
-Download the latest APK from the [GitHub Releases](https://github.com/HBSoftware63/hb-aio/releases) page.
+Get the latest `app-release.apk` from the [Releases page](https://github.com/HBSoftware63/hb-aio/releases/latest) and install it. You may need to allow "Install unknown apps" for your browser or file manager.
 
-## Installation
+Requires Android 10 (API 29) or newer.
 
-1. Download the APK from Releases.
-2. Open the downloaded APK on your Android device.
-3. Allow installation from this source if Android asks.
-4. Install and launch the app.
+## Features
 
-## Automatic APK Build
+- Download videos and MP3 (powered by yt-dlp and FFmpeg through youtubedl-android)
+- Choose where videos and MP3 are saved, with a separate YouTube folder
+- Set a downloaded MP3 as ringtone, notification or alarm
+- WhatsApp status saver (reads the `.Statuses` folder directly, needs "Allow file access")
+- Download history
+- Share a link to the app to start a download
+- yt-dlp updates itself in the background (every 3 days) so downloads keep working
+- Paste several links at once, all of them download (the same link is never downloaded twice)
+- Built-in updater: the app checks `update.json` on start, offers new versions and verifies the APK checksum
 
-This project can use GitHub Actions to build the Android APK automatically.
+## Permissions
 
-1. Open the repository on GitHub.
-2. Go to the **Actions** tab.
-3. Run the available build workflow or push a commit.
-4. Download the generated APK from the workflow's **Artifacts** section.
+| Permission | Why |
+|---|---|
+| Internet / network state | Downloading and update checks |
+| Foreground service (data sync) and notifications | Show download progress |
+| All files access / read storage | WhatsApp status saver |
+| Write settings | Set MP3 as ringtone |
+| Install packages | Install updates from inside the app |
 
-*Automatic builds require a correctly configured GitHub Actions workflow and Android build environment.*
+## How updates work
 
-## Update Configuration
-
-The `update.json` file can be used to provide update information to the app, provided the app's update-checking code supports the same JSON format.
-
-Example:
+On launch the app reads [`update.json`](update.json) from this repo and compares `versionCode` with its own. If the JSON number is higher, an "Update available" dialog appears and the APK from `apkUrl` is downloaded and installed.
 
 ```json
 {
   "versionCode": 21,
-  "versionName": "21",
-  "downloadUrl": "https://github.com/HBSoftware63/hb-aio/releases/download/v4/app-release.apk",
-  "releaseNotes": "Bug fixes and improvements"
+  "versionName": "7.0",
+  "apkUrl": "https://github.com/HBSoftware63/hb-aio/releases/download/v7.0/app-release.apk",
+  "minVersionCode": 0,
+  "notes": "What's new",
+  "sha256": "checksum of the APK (added automatically by the workflow)"
 }
 ```
 
-**Important:** Update the version and APK URL whenever you publish a new release. The JSON field names must match the format expected by the app.
+`minVersionCode` equal to `versionCode` makes the update mandatory. The JSON link is set in `Updater.kt` (`UPDATE_JSON_URL`).
 
-## Repository
+## Build and release (GitHub Actions)
 
-Source code and releases:  
-https://github.com/HBSoftware63/hb-aio
+APK build, GitHub Release and `update.json` update are automated by `.github/workflows/release.yml`.
+
+**One-time setup**
+
+1. Repo **Settings > Secrets and variables > Actions**, add:
+   - `KEYSTORE_BASE64` (your keystore file encoded with base64)
+   - `KEYSTORE_PASSWORD`
+   - `KEY_ALIAS`
+   - `KEY_PASSWORD`
+2. **Settings > Actions > General > Workflow permissions**: select *Read and write permissions*.
+
+Always sign with the same keystore, otherwise users get "App not installed" when updating. Never commit the keystore.
+
+**For every new version**
+
+1. In `app/build.gradle.kts` increase `versionCode` and change `versionName`. Write the update text in `release_notes.txt`, then push.
+2. Open **Actions > Build APK + Release + Update JSON > Run workflow**. Optionally type notes there instead, or tick *force update*.
+3. The workflow builds the signed APK, publishes it as release `v<versionName>`, then updates and commits `update.json`.
+
+Urdu step-by-step guide: [README_URDU.md](README_URDU.md)
+
+## Local build
+
+```bash
+export KEYSTORE_PATH=/path/to/hbkey.jks
+export KEYSTORE_PASSWORD=...
+export KEY_ALIAS=hbkey
+export KEY_PASSWORD=...
+./gradlew assembleRelease
+```
+
+The APK is created at `app/build/outputs/apk/release/app-release.apk`. Without the `KEYSTORE_*` variables the release APK is unsigned. Requires JDK 17 and the Android SDK (compileSdk 34).
+
+## Tech stack
+
+Kotlin, AndroidX, Kotlin coroutines, [youtubedl-android](https://github.com/yausername/youtubedl-android) (yt-dlp + FFmpeg), Gradle 8.7, Android Gradle Plugin 8.5.2.
 
 ## Disclaimer
 
-Use this application responsibly and respect the terms of service and copyright rules of the websites you access. Only download content you are authorized to download.
+Download only content you own or have permission to download, and respect the terms of service of each site.
 
-## License
+---
 
-Add the appropriate license file and license details for this project.
+Publisher: HBSoftware

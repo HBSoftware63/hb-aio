@@ -18,6 +18,7 @@ Requires Android 10 (API 29) or newer.
 - WhatsApp status saver (reads the `.Statuses` folder directly, needs "Allow file access")
 - Download history
 - Share a link to the app to start a download
+- "Download only on Wi-Fi" option (waits for Wi-Fi to save mobile data)
 - yt-dlp updates itself in the background (every 3 days) so downloads keep working
 - Paste several links at once, all of them download (the same link is never downloaded twice)
 - Built-in updater: the app checks `update.json` on start, offers new versions and verifies the APK checksum
@@ -38,16 +39,16 @@ On launch the app reads [`update.json`](update.json) from this repo and compares
 
 ```json
 {
-  "versionCode": 21,
-  "versionName": "7.0",
-  "apkUrl": "https://github.com/HBSoftware63/hb-aio/releases/download/v7.0/app-release.apk",
+  "versionCode": 22,
+  "versionName": "7.1",
+  "apkUrl": "https://github.com/HBSoftware63/hb-aio/releases/download/v5/app-release.apk",
   "minVersionCode": 0,
   "notes": "What's new",
   "sha256": "checksum of the APK (added automatically by the workflow)"
 }
 ```
 
-`minVersionCode` equal to `versionCode` makes the update mandatory. The JSON link is set in `Updater.kt` (`UPDATE_JSON_URL`).
+`versionCode` is the number the app compares (must grow with every release), `versionName` is only the text shown to users, and the `v5` in `apkUrl` is the Release tag you type when running the workflow (not the version). `minVersionCode` equal to `versionCode` makes the update mandatory. The JSON link is set in `Updater.kt` (`UPDATE_JSON_URL`).
 
 ## Build and release (GitHub Actions)
 
@@ -67,8 +68,8 @@ Always sign with the same keystore, otherwise users get "App not installed" when
 **For every new version**
 
 1. In `app/build.gradle.kts` increase `versionCode` and change `versionName`. Write the update text in `release_notes.txt`, then push.
-2. Open **Actions > Build APK + Release + Update JSON > Run workflow**. Optionally type notes there instead, or tick *force update*.
-3. The workflow builds the signed APK, publishes it as release `v<versionName>`, then updates and commits `update.json`.
+2. Open **Actions > Build APK + Release + Update JSON > Run workflow**. Type the release tag (e.g. `v5`, use a new tag for every version) and optionally notes, or tick *force update*.
+3. The workflow builds the signed APK, publishes it as the release tag you typed (e.g. `v5`), then updates and commits `update.json`.
 
 Urdu step-by-step guide: [README_URDU.md](README_URDU.md)
 

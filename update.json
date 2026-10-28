@@ -1,7 +1,7 @@
 {
   "versionCode": 21,
   "versionName": "7.0",
-  "apkUrl": "https://github.com/HBSoftware63/hb-aio/releases/download/v7.0/app-release.apk",
+  "apkUrl": "https://github.com/HBSoftware63/hb-aio/releases/download/v4/app-release.apk",
   "minVersionCode": 0,
   "notes": "All In One Downloader 7.0: choose where videos and MP3 are saved, separate YouTube folder, set an MP3 as ringtone, faster downloads, WhatsApp status now reads directly (Allow file access)."
 }

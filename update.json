@@ -1,7 +1,7 @@
 {
   "versionCode": 22,
   "versionName": "7.1",
-  "apkUrl": "https://github.com/HBSoftware63/hb-aio/releases/download/v5/app-release.apk",
+  "apkUrl": "https://github.com/HBSoftware63/hb-aio/releases/download/v7.1/app-release.apk",
   "minVersionCode": 0,
   "notes": "All In One Downloader 7.1: new Wi-Fi only option to save mobile data, yt-dlp now updates itself in the background so downloads keep working, paste several links at once and all of them download, the same link is no longer downloaded twice, and app updates are now checked for damage before installing."
 }

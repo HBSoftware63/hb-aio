@@ -12,16 +12,40 @@ Requires Android 10 (API 29) or newer.
 
 ## Features
 
+**Downloading**
 - Download videos and MP3 (powered by yt-dlp and FFmpeg through youtubedl-android)
+- Paste several links at once, all of them download (the same link is never downloaded twice)
+- Share a link to the app to start a download
+- Pause, resume and cancel from the app or from the notification
+- Live progress: percent, speed, time left, and downloaded / total size (for example `12.3 MB / 45.0 MB`)
+- "Download only on Wi-Fi" option (waits for Wi-Fi to save mobile data, and pauses again if Wi-Fi drops in the middle of a download)
 - Choose where videos and MP3 are saved, with a separate YouTube folder
+
+**History**
+- One **History** button on the main page; inside, **Video** and **Audio** tabs keep two separate lists (photos are listed under Video)
+- Size of every file, size of each tab, and the size of everything together
+- Search by title or link
+- Tap to open or play; long press for Share, Copy link, Download again, Remove from history, Delete file too (asks before deleting the real file)
+- Files that were deleted or moved are marked "File deleted or moved", with a "Download again" option
+- Failed downloads can be retried from History
+
+**Extras**
 - Set a downloaded MP3 as ringtone, notification or alarm
 - WhatsApp status saver (reads the `.Statuses` folder directly, needs "Allow file access")
-- Download history
-- Share a link to the app to start a download
-- "Download only on Wi-Fi" option (waits for Wi-Fi to save mobile data)
+- Share a finished download straight from its notification or from History
 - yt-dlp updates itself in the background (every 3 days) so downloads keep working
-- Paste several links at once, all of them download (the same link is never downloaded twice)
-- Built-in updater: the app checks `update.json` on start, offers new versions and verifies the APK checksum
+- Built-in updater: the app checks `update.json` on start and verifies the APK checksum. **Updates are compulsory**: when a newer version exists the app cannot be used until it is installed
+
+## What's new in 7.3
+
+- History button is now on the main page (it used to be hidden inside Settings)
+- Separate Video and Audio history (tabs), with file sizes and total size
+- Downloaded / total size shown while downloading
+- History search, Copy link, Download again, and a mark for files that are no longer on the phone
+- Confirmation before "Delete file too"
+- Clear message when the phone storage is full
+- History keeps up to 1000 entries (was 200)
+- Every update is now compulsory (no more "Later" button)
 
 ## Permissions
 
@@ -39,16 +63,16 @@ On launch the app reads [`update.json`](update.json) from this repo and compares
 
 ```json
 {
-  "versionCode": 22,
-  "versionName": "7.1",
-  "apkUrl": "https://github.com/HBSoftware63/hb-aio/releases/download/v5/app-release.apk",
-  "minVersionCode": 0,
+  "versionCode": 24,
+  "versionName": "7.3",
+  "apkUrl": "https://github.com/HBSoftware63/hb-aio/releases/download/v7.3/app-release.apk",
+  "minVersionCode": 24,
   "notes": "What's new",
   "sha256": "checksum of the APK (added automatically by the workflow)"
 }
 ```
 
-`versionCode` is the number the app compares (must grow with every release), `versionName` is only the text shown to users, and the `v5` in `apkUrl` is the Release tag you type when running the workflow (not the version). `minVersionCode` equal to `versionCode` makes the update mandatory. The JSON link is set in `Updater.kt` (`UPDATE_JSON_URL`).
+Every update is mandatory: the app uses the larger of `minVersionCode` and `versionCode` as the lowest version that may still be used (older app versions that do not have this rule only look at `minVersionCode`, so the workflow sets it equal to `versionCode`). The JSON link is set in `Updater.kt` (`UPDATE_JSON_URL`).
 
 ## Build and release (GitHub Actions)
 
@@ -68,8 +92,8 @@ Always sign with the same keystore, otherwise users get "App not installed" when
 **For every new version**
 
 1. In `app/build.gradle.kts` increase `versionCode` and change `versionName`. Write the update text in `release_notes.txt`, then push.
-2. Open **Actions > Build APK + Release + Update JSON > Run workflow**. Type the release tag (e.g. `v5`, use a new tag for every version) and optionally notes, or tick *force update*.
-3. The workflow builds the signed APK, publishes it as the release tag you typed (e.g. `v5`), then updates and commits `update.json`.
+2. Open **Actions > Build APK + Release + Update JSON > Run workflow**. Optionally type notes there instead. *force update* is ON by default.
+3. The workflow builds the signed APK, publishes it as release `v<versionName>`, then updates and commits `update.json`.
 
 Urdu step-by-step guide: [README_URDU.md](README_URDU.md)
 

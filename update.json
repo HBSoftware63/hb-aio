@@ -1,7 +1,7 @@
 {
-  "versionCode": 24,
-  "versionName": "7.3",
-  "apkUrl": "https://github.com/HBSoftware63/hb-aio/releases/download/v7.3/app-release.apk",
-  "minVersionCode": 24,
-  "notes": "All In One Downloader 7.3: One History button on the main page with Video and Audio tabs, size of every file and the total size, and a search box. While downloading you see how much is done and the full size (for example 12 MB / 45 MB). History now marks files that were deleted, offers Copy link and Download again, and asks before deleting a file. A clear message when the phone storage is full. Updates are now compulsory: the app asks for the update and cannot be used until it is installed."
+  "versionCode": 25,
+  "versionName": "7.4",
+  "apkUrl": "https://github.com/HBSoftware63/hb-aio/releases/download/v7.4/app-release.apk",
+  "minVersionCode": 25,
+  "notes": "All In One Downloader 7.4 🔄\n\n🔄 App update, now in the background\n- ⏬ The update keeps downloading after you close the app, switch to another one or lock the phone\n- 🔁 A half download is continued where it stopped, it never starts from zero again\n- 📊 Notification shows percent, downloaded / total size and speed while it runs\n- ✅ Open the app again and Install is waiting: the file already on the phone is used, so no second download and no internet needed\n- 👆 One tap opens Android's installer directly, with no extra box of the app in the way (Android itself always asks once)\n- 🙈 Tap Hide and the download carries on without the box, Cancel stops it\n- 📶 Weak connection: it waits for the internet and continues by itself\n- 🧹 After the new version is installed the downloaded APK is deleted, so it does not eat storage"
 }
